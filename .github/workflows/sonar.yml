@@ -49,6 +49,6 @@
               -Dsonar.sources=zadanie4/controllers
               -Dsonar.host.url=https://sonarcloud.io
               -Dsonar.tests=zadanie4/controllers/controllers_tests
-              -Dsonar.test.inclusions=zadanie4/controllers/controllers_tests
+              -Dsonar.test.inclusions=zadanie4/controllers/controllers_tests/**
           env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
