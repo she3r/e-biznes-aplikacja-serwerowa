@@ -48,3 +48,4 @@
               -Dsonar.go.coverage.reportPaths=coverage.out
           env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            SONAR_SCANNER_OPTS: "-X"
