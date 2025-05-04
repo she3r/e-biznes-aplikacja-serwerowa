@@ -1,4 +1,4 @@
-package controllers_tests
+package controllers
 
 import (
 	"bytes"
@@ -7,7 +7,6 @@ import (
 	"net/http/httptest"
 	"strconv"
 	"testing"
-	"zadanie4_project/controllers"
 	"zadanie4_project/db"
 	"zadanie4_project/models"
 
@@ -34,7 +33,7 @@ func TestCreateProduct(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	err := controllers.CreateProduct(c)
+	err := CreateProduct(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusCreated, rec.Code)
@@ -58,7 +57,7 @@ func TestGetProducts(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	err := controllers.GetProducts(c)
+	err := GetProducts(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)
@@ -85,7 +84,7 @@ func TestGetProduct(t *testing.T) {
 	c.SetParamNames("id")
 	c.SetParamValues(strconv.Itoa(int(product.ID)))
 
-	err := controllers.GetProduct(c)
+	err := GetProduct(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)
@@ -120,7 +119,7 @@ func TestUpdateProduct(t *testing.T) {
 	c.SetParamNames("id")
 	c.SetParamValues(strconv.Itoa(int(product.ID)))
 
-	err := controllers.UpdateProduct(c)
+	err := UpdateProduct(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)
@@ -147,7 +146,7 @@ func TestDeleteProduct(t *testing.T) {
 	c.SetParamNames("id")
 	c.SetParamValues(strconv.Itoa(int(product.ID)))
 
-	err := controllers.DeleteProduct(c)
+	err := DeleteProduct(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)

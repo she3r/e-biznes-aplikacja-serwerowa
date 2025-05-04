@@ -1,4 +1,4 @@
-package controllers_tests
+package controllers
 
 import (
 	"bytes"
@@ -7,7 +7,6 @@ import (
 	"net/http/httptest"
 	"strconv"
 	"testing"
-	"zadanie4_project/controllers"
 	"zadanie4_project/db"
 	"zadanie4_project/models"
 
@@ -26,7 +25,7 @@ func TestCreateCategory(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	err := controllers.CreateCategory(c)
+	err := CreateCategory(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusCreated, rec.Code)
@@ -46,7 +45,7 @@ func TestGetCategories(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	err := controllers.GetCategories(c)
+	err := GetCategories(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)
@@ -70,7 +69,7 @@ func TestGetCategory(t *testing.T) {
 	c.SetParamNames("id")
 	c.SetParamValues(strconv.Itoa(int(category.ID)))
 
-	err := controllers.GetCategory(c)
+	err := GetCategory(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)
@@ -96,7 +95,7 @@ func TestUpdateCategory(t *testing.T) {
 	c.SetParamNames("id")
 	c.SetParamValues(strconv.Itoa(int(category.ID)))
 
-	err := controllers.UpdateCategory(c)
+	err := UpdateCategory(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)
@@ -119,7 +118,7 @@ func TestDeleteCategory(t *testing.T) {
 	c.SetParamNames("id")
 	c.SetParamValues(strconv.Itoa(int(category.ID)))
 
-	err := controllers.DeleteCategory(c)
+	err := DeleteCategory(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)

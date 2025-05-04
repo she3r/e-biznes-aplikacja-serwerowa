@@ -1,4 +1,4 @@
-package controllers_tests
+package controllers
 
 import (
 	"encoding/json"
@@ -10,7 +10,6 @@ import (
 	"net/http/httptest"
 	"strconv"
 	"testing"
-	"zadanie4_project/controllers"
 	"zadanie4_project/db"
 	"zadanie4_project/models"
 )
@@ -34,7 +33,7 @@ func TestCreateBasket(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	err := controllers.CreateBasket(c)
+	err := CreateBasket(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusCreated, rec.Code)
@@ -59,7 +58,7 @@ func TestGetBasket(t *testing.T) {
 	c.SetParamNames("id")
 	c.SetParamValues(basketId)
 
-	err := controllers.GetBasket(c)
+	err := GetBasket(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)

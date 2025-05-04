@@ -46,7 +46,7 @@
               -Dsonar.projectKey=she3r_e-biznes-aplikacja-serwerowa
               -Dsonar.organization=she3r
               -Dsonar.go.coverage.reportPaths=zadanie4_project/coverage.out
-              -Dsonar.sources=zadanie4_project/controllers
+              -Dsonar.sources=zadanie4_project
               -Dsonar.host.url=https://sonarcloud.io
               -Dsonar.tests=zadanie4_project/controllers/controllers_tests
               -Dsonar.test.inclusions=zadanie4_project/controllers/controllers_tests/**

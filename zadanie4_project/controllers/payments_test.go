@@ -1,4 +1,4 @@
-package controllers_tests
+package controllers
 
 import (
 	"bytes"
@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"zadanie4_project/controllers"
 	"zadanie4_project/db"
 	"zadanie4_project/models"
 
@@ -33,7 +32,7 @@ func TestCreatePayment(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	err := controllers.CreatePayment(c)
+	err := CreatePayment(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusCreated, rec.Code)

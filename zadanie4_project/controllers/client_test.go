@@ -1,4 +1,4 @@
-package controllers_tests
+package controllers
 
 import (
 	"bytes"
@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"zadanie4_project/controllers"
 	"zadanie4_project/db"
 	"zadanie4_project/models"
 
@@ -28,7 +27,7 @@ func TestCreateClient(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	err := controllers.CreateClient(c)
+	err := CreateClient(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusCreated, rec.Code)
@@ -50,7 +49,7 @@ func TestGetClients(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	err := controllers.GetClients(c)
+	err := GetClients(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)
