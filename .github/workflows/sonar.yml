@@ -32,11 +32,11 @@
               ${{ runner.os }}-go-
 
         - name: Install dependencies
-          working-directory: ./zadanie4
+          working-directory: ./zadanie4_project
           run: go mod tidy
 
         - name: Run tests
-          working-directory: ./zadanie4
+          working-directory: ./zadanie4_project
           run: go test -v ./... -coverprofile=coverage.out
 
         - name: SonarCloud Scan
@@ -45,10 +45,10 @@
             args: >
               -Dsonar.projectKey=she3r_e-biznes-aplikacja-serwerowa
               -Dsonar.organization=she3r
-              -Dsonar.go.coverage.reportPaths=zadanie4/coverage.out
-              -Dsonar.sources=zadanie4/controllers
+              -Dsonar.go.coverage.reportPaths=zadanie4_project/coverage.out
+              -Dsonar.sources=zadanie4_project/controllers
               -Dsonar.host.url=https://sonarcloud.io
-              -Dsonar.tests=zadanie4/controllers/controllers_tests
-              -Dsonar.test.inclusions=zadanie4/controllers/controllers_tests/**
+              -Dsonar.tests=zadanie4_project/controllers/controllers_tests
+              -Dsonar.test.inclusions=zadanie4_project/controllers/controllers_tests/**
           env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
