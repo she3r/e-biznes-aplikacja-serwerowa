@@ -58,3 +58,38 @@ func TestGetEmployees(t *testing.T) {
 	assert.Len(t, employees, 1)
 	assert.Equal(t, "Tomasz Zieliński", employees[0].Name)
 }
+
+func TestCreateEmployee_InternalServerError(t *testing.T) {
+	simulateBrokenDB()
+	e := setupEcho()
+
+	employee := models.Employee{
+		Name:    "Anna Nowak",
+		Address: "anna@example.com",
+	}
+	body, _ := json.Marshal(employee)
+
+	req := httptest.NewRequest(http.MethodPost, "/employees", bytes.NewReader(body))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	err := CreateEmployee(c)
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusInternalServerError, rec.Code)
+	assert.Contains(t, rec.Body.String(), "Nie udało się utworzyć pracownika")
+}
+
+func TestGetEmployees_InternalServerError(t *testing.T) {
+	simulateBrokenDB()
+	e := setupEcho()
+
+	req := httptest.NewRequest(http.MethodGet, "/employees", nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	err := GetEmployees(c)
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusInternalServerError, rec.Code)
+	assert.Contains(t, rec.Body.String(), "Nie udało się wydobyć pracowników")
+}
