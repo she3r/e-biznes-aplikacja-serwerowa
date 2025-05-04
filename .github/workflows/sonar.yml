@@ -37,7 +37,7 @@
 
         - name: Run tests
           working-directory: ./zadanie4
-          run: go test -v ./... -coverprofile=coverage
+          run: go test -v ./... -coverprofile=coverage.out
 
         - name: SonarCloud Scan
           uses: SonarSource/sonarcloud-github-action@v2
@@ -45,6 +45,6 @@
             args: >
               -Dsonar.projectKey=she3r_e-biznes-aplikacja-serwerowa
               -Dsonar.organization=she3r
-              -Dsonar.go.coverage.reportPaths=zadanie4/coverage
+              -Dsonar.go.coverage.reportPaths=zadanie4/coverage.out
           env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
