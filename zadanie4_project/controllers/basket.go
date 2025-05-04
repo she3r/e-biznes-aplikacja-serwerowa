@@ -18,17 +18,11 @@ func CreateBasket(c echo.Context) error {
 }
 
 func AddProductToBasket(c echo.Context) error {
-	basketID := c.Param("basket_id")
-	productID := c.Param("product_id")
+	basketID, productID := GetBasketIdAndProductId(c)
 
-	var basket models.Basket
-	if err := db.DB.First(&basket, basketID).Error; err != nil {
-		return c.JSON(http.StatusNotFound, echo.Map{"message": BasketNotFoundErrorMsg})
-	}
-
-	var product models.Product
-	if err := db.DB.First(&product, productID).Error; err != nil {
-		return c.JSON(http.StatusNotFound, echo.Map{"message": ProductNotFoundErrorMsg})
+	basket, product, err, isErr := GetBasketAndProduct(c, basketID, productID)
+	if isErr {
+		return err
 	}
 
 	db.DB.Model(&basket).Association("Products").Append(&product)
@@ -36,17 +30,11 @@ func AddProductToBasket(c echo.Context) error {
 }
 
 func RemoveProductFromBasket(c echo.Context) error {
-	basketID := c.Param("basket_id")
-	productID := c.Param("product_id")
+	basketID, productID := GetBasketIdAndProductId(c)
 
-	var basket models.Basket
-	if err := db.DB.First(&basket, basketID).Error; err != nil {
-		return c.JSON(http.StatusNotFound, echo.Map{"message": BasketNotFoundErrorMsg})
-	}
-
-	var product models.Product
-	if err := db.DB.First(&product, productID).Error; err != nil {
-		return c.JSON(http.StatusNotFound, echo.Map{"message": ProductNotFoundErrorMsg})
+	basket, product, err, isErr := GetBasketAndProduct(c, basketID, productID)
+	if isErr {
+		return err
 	}
 
 	db.DB.Model(&basket).Association("Products").Delete(&product)
@@ -60,4 +48,23 @@ func GetBasket(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, echo.Map{"message": BasketNotFoundErrorMsg})
 	}
 	return c.JSON(http.StatusOK, basket)
+}
+
+func GetBasketAndProduct(c echo.Context, basketID string, productID string) (models.Basket, models.Product, error, bool) {
+	var basket models.Basket
+	if err := db.DB.First(&basket, basketID).Error; err != nil {
+		return models.Basket{}, models.Product{}, c.JSON(http.StatusNotFound, echo.Map{"message": BasketNotFoundErrorMsg}), true
+	}
+
+	var product models.Product
+	if err := db.DB.First(&product, productID).Error; err != nil {
+		return models.Basket{}, models.Product{}, c.JSON(http.StatusNotFound, echo.Map{"message": ProductNotFoundErrorMsg}), true
+	}
+	return basket, product, nil, false
+}
+
+func GetBasketIdAndProductId(c echo.Context) (string, string) {
+	basketID := c.Param("basket_id")
+	productID := c.Param("product_id")
+	return basketID, productID
 }
