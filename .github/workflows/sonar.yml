@@ -32,11 +32,11 @@ jobs:
             ${{ runner.os }}-go-
 
       - name: Install dependencies
-        working-directory: ./server-app
+        working-directory: ./zadanie4
         run: go mod tidy
 
       - name: Run tests
-        working-directory: ./server-app
+        working-directory: ./zadanie4
         run: go test -v ./... -coverprofile=coverage.out
 
       - name: SonarCloud Scan
